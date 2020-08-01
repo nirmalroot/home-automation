@@ -1,0 +1,87 @@
+//=====================================================================================|
+//=====================================wifi setup======================================|
+//=====================================================================================|
+void wlan_fb_setup(){
+    pinMode(23,OUTPUT);
+    pinMode(22,OUTPUT);   
+    pinMode(21,OUTPUT);
+    pinMode(19,OUTPUT);
+  Serial.begin(115200);
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.print(".");
+    delay(300);
+  }
+  Serial.println();
+  Serial.print("Connected with IP: ");
+  Serial.println(WiFi.localIP());
+  Serial.println();
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+  Firebase.reconnectWiFi(true);
+  
+
+   if(Firebase.setInt(firebaseData, "/switchs/light_1",0)){
+     Serial.println("Set int data 1 success");
+  }
+  if(Firebase.setInt(firebaseData, "/switchs/light_2",0)){
+     Serial.println("Set int data 2 success");
+  }
+  if(Firebase.setInt(firebaseData, "/switchs/light_3",0)){
+     Serial.println("Set int data 3 success");
+  }
+  if(Firebase.setInt(firebaseData, "/switchs/light_4",0)){
+     Serial.println("Set int data 4 success");
+  }
+}
+//=====================================================================================|
+//====================================ON||OF===========================================|
+//=====================================================================================|
+   void on_off(){
+
+   if(Firebase.getInt(firebaseData,"/switchs/light_1")){
+    if(firebaseData.intData() == 0){
+      digitalWrite(23,HIGH);
+      }
+      else{
+        digitalWrite(23,LOW);
+        }
+   }
+//=====================================================================================
+   if(Firebase.getInt(firebaseData,"/switchs/light_2")){
+    if(firebaseData.intData() == 0){
+      digitalWrite(22,HIGH);
+      }
+      else{
+        digitalWrite(22,LOW);
+        }
+   }
+//=====================================================================================
+   if(Firebase.getInt(firebaseData,"/switchs/light_3")){
+    if(firebaseData.intData() == 0){
+      digitalWrite(21,HIGH);
+      }
+      else{
+        digitalWrite(21,LOW);
+        }
+   }
+//=====================================================================================
+   if(Firebase.getInt(firebaseData,"/switchs/light_4")){
+    if(firebaseData.intData() == 0){
+      digitalWrite(19,HIGH);
+      }
+      else{        digitalWrite(19,LOW);
+        }
+  }
+}
+//=====================================================================================|
+//=====================================vdata===========================================|
+//=====================================================================================|
+  void resistor(){
+    data1 = analogRead(36);
+    data1 = map(data1,0, 4095, 200, 0);
+    if(Firebase.setInt(firebaseData,"/sensors/value",data1)){
+    }
+  }
