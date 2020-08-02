@@ -4,5 +4,5 @@
 }
  void loop(){
    on_off();
-   resistor();
+   vdata();
   }
