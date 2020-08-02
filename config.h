@@ -6,8 +6,4 @@ FirebaseData firebaseData;
 #define WIFI_SSID "SUPER-USER"
 #define WIFI_PASSWORD "your wifi password"
 int  data1;
-int  fireStatus1;
-int  fireStatus2;
-int  fireStatus3;
-int  fireStatus4;
- 
+
